@@ -1,26 +1,31 @@
 const itemForm = document.getElementById("item-form");
 const itemInput = document.getElementById("item-input");
 const itemlist = document.getElementById("item-list");
+const clearBtn = document.getElementById("clear");
+const itemFilter = document.getElementById("filter");
 
 function addItem(e) {
   e.preventDefault();
 
   const newItem = itemInput.value;
 
-  // Validate Input
+  //! Validate Input
   if (newItem === "") {
     alert("Please add an item");
     return;
   }
 
-  // Create list item
+  //! Create list item
   const li = document.createElement("li");
   li.appendChild(document.createTextNode(newItem));
 
   const button = createButton("remove-item btn-link text-red");
   li.appendChild(button);
 
+  // Add li to the DOM
   itemlist.appendChild(li);
+
+  checkUI();
 
   itemInput.value = "";
 }
@@ -39,5 +44,46 @@ function createIcon(classes) {
   return icon;
 }
 
+function removeItem(e) {
+  if (e.target.parentElement.classList.contains("remove-item")) {
+    if (confirm("Are you sure?")) {
+      e.target.parentElement.parentElement.remove();
+
+      checkUI();
+    }
+  }
+}
+
+function clearItems() {
+  while (itemlist.firstChild) {
+    itemlist.removeChild(itemlist.firstChild);
+  }
+
+  checkUI();
+}
+
+function filterItems(e) {
+  const text = e.target.value;
+
+  console.log(text);
+}
+
+function checkUI() {
+  const items = itemlist.querySelectorAll("li");
+
+  if (items.length === 0) {
+    clearBtn.style.display = "none";
+    itemFilter.style.display = "none";
+  } else {
+    clearBtn.style.display = "block";
+    itemFilter.style.display = "block";
+  }
+}
+
 //! Event listeners
 itemForm.addEventListener("submit", addItem);
+itemlist.addEventListener("click", removeItem);
+clearBtn.addEventListener("click", clearItems);
+itemFilter.addEventListener("input", filterItems);
+
+checkUI();
