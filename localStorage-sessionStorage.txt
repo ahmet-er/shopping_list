@@ -1,0 +1,12 @@
+What is localStorage / sessionStorage?
+    - Property on `Window`interface that allows us to access a Storage object 
+    - Data is stored in the browser
+    - Data is stored as key/value pairs and values are strings (can not store objects)
+
+localStorage and sessionStorage have the same API. The difference is that localStorage does not expire, while sessionStorage only lasts until the page closed
+
+localStorage Methods
+    localStorage.setItem('name', 'ahmet'); // set a value with a key
+    localStorage.getItem('name'); // get a value using the key
+    localStorage.removeItem('name'); // remove item using the key
+    localStorage.clear(); // clear all values
